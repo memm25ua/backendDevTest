@@ -2,7 +2,7 @@
 
 ## Solución
 
-La solución implementada para este test se encuentra en la carpeta [`backendtest`](./backendtest), que contiene el proyecto Spring Boot con el código fuente de la API solicitada. Ahí podrás encontrar los controladores, servicios y la configuración necesaria para exponer el endpoint `/product/{productId}/similar` en el puerto 5001.
+La solución implementada para este test se encuentra en la carpeta [`backendtest`](./backendtest), que contiene el proyecto Spring Boot con el código fuente de la API solicitada. Ahí podrás encontrar los controladores, servicios y la configuración necesaria para exponer el endpoint `/product/{productId}/similar` en el puerto 5001 (ver [backendtest/README.md](./backendtest/README.md) para más detalles).
 
 We want to offer a new feature to our customers showing similar products to the one they are currently seeing. To do this we agreed with our front-end applications to create a new REST API operation that will provide them the product detail of the similar products for a given one. [Here](./similarProducts.yaml) is the contract we agreed.
 
