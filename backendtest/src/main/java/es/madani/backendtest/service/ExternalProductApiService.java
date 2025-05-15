@@ -34,7 +34,7 @@ public class ExternalProductApiService {
         this.baseUrl = baseUrl;
     }
 
-    public List<String> getSimilarProductIds(String productId) {
+    private List<String> getSimilarProductIds(String productId) {
         String url = String.format("%s/product/%s/similarids", baseUrl, productId);
         try {
             ResponseEntity<String[]> response = restTemplate.getForEntity(url, String[].class);
@@ -47,7 +47,7 @@ public class ExternalProductApiService {
         return Collections.emptyList();
     }
 
-    public Optional<ProductDetail> getProductDetail(String productId) {
+    private Optional<ProductDetail> getProductDetail(String productId) {
         String url = String.format("%s/product/%s", baseUrl, productId);
         try {
             ResponseEntity<ProductDetail> response = restTemplate.getForEntity(url, ProductDetail.class);
