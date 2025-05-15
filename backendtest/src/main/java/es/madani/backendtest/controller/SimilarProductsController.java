@@ -1,8 +1,6 @@
 package es.madani.backendtest.controller;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.madani.backendtest.model.ProductDetail;
 import es.madani.backendtest.model.SimilarProducts;
 import es.madani.backendtest.service.ExternalProductApiService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,17 +32,10 @@ public class SimilarProductsController {
     })
     @GetMapping("/{productId}/similar")
     public ResponseEntity<?> getSimilarProducts(@PathVariable String productId) {
-        // Primero, comprobar si el producto existe
-        Optional<ProductDetail> mainProduct = externalProductApiService.getProductDetail(productId);
-        if (mainProduct.isEmpty()) {
+        Optional<SimilarProducts> result = externalProductApiService.getSimilarProducts(productId);
+        if (result.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product Not found");
         }
-        List<String> similarIds = externalProductApiService.getSimilarProductIds(productId);
-        List<ProductDetail> similarProducts = similarIds.stream()
-                .map(externalProductApiService::getProductDetail)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new SimilarProducts(similarProducts));
+        return ResponseEntity.ok(result.get());
     }
 }

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import es.madani.backendtest.model.ProductDetail;
+import es.madani.backendtest.model.SimilarProducts;
 
 @Service
 public class ExternalProductApiService {
@@ -56,5 +58,19 @@ public class ExternalProductApiService {
             logger.warn("Error fetching product detail for {}: {}", productId, e.getMessage());
         }
         return Optional.empty();
+    }
+
+    public Optional<SimilarProducts> getSimilarProducts(String productId) {
+        Optional<ProductDetail> mainProduct = getProductDetail(productId);
+        if (mainProduct.isEmpty()) {
+            return Optional.empty();
+        }
+        List<String> similarIds = getSimilarProductIds(productId);
+        List<ProductDetail> similarProducts = similarIds.stream()
+                .map(this::getProductDetail)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+        return Optional.of(new SimilarProducts(similarProducts));
     }
 }
