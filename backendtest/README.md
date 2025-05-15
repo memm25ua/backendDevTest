@@ -59,5 +59,5 @@ Puedes ver los resultados de rendimiento en:
 
 ## Notas
 
-- El puerto de la API es configurable en `src/main/resources/application.properties` (`server.port=5000`).
+- El puerto de la API es configurable en `src/main/resources/application.properties` (`server.port=5001`).
 - La URL base de los servicios mock también es configurable (`external.api.base-url`).
